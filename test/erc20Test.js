@@ -24,7 +24,7 @@ describe("erc20 token test cases", () => {
 
   describe('Transfer', () => {
     it('test if the balance is sufficient', async () => {
-      expect(cryptos.connect(addr1).transfer(owner.address, 1))
+      await expect(cryptos.connect(addr1).transfer(owner.address, 1))
         .to.be.revertedWith('Do not have enough balance in the account');
     })
 
@@ -39,12 +39,12 @@ describe("erc20 token test cases", () => {
 
   describe('Approve', () => {
     it('test if if the approved is allowed for low balances', async () => {
-      expect(cryptos.connect(owner).approve(addr1.address, 10000000))
+      await expect(cryptos.connect(owner).approve(addr1.address, 10000000))
         .to.be.revertedWith('Not enough balance in sender account');
     })
 
     it('test if if the approved is allowed for 0 amount', async () => {
-      expect(cryptos.connect(owner).approve(addr1.address, 0))
+      await expect(cryptos.connect(owner).approve(addr1.address, 0))
         .to.be.revertedWith('0 not allowed');
     })
 
@@ -57,12 +57,12 @@ describe("erc20 token test cases", () => {
 
   describe('Transfer from', () => {
     it('Test not enough balance', async () => {
-      expect(cryptos.connect(addr1).transferFrom(owner.address, addr2.address, 1000000))
+      await expect(cryptos.connect(addr1).transferFrom(owner.address, addr2.address, 10000000))
         .to.be.revertedWith('Not enough balance in sender account');
     });
 
     it('Test not not allowed', async () => {
-      expect(cryptos.connect(addr1).transferFrom(owner.address, addr2.address, 50))
+      await expect(cryptos.connect(addr1).transferFrom(owner.address, addr2.address, 50))
         .to.be.revertedWith('Required amount not allowed');
     });
 

@@ -60,7 +60,7 @@ contract CryptosICO is Cryptos {
 		require(icoState == State.running, "ICO is curently not in running state");
 		require(msg.value >= minInvestment && msg.value <= maxInvestment, "investment amount breached the limit");
 		raisedAmount += msg.value;
-		require(raisedAmount <= hardCap, "hard cap of the ico has been reacged");
+		require(raisedAmount <= hardCap, "hard cap of the ico has been reached");
 
 		uint tokens = msg.value / tokenPrice;
 
@@ -78,12 +78,12 @@ contract CryptosICO is Cryptos {
 	}
 
 	function transfer(address _to, uint256 _value) public override returns (bool){
-		require(block.timestamp == tokenTradeStart, "Trade time has not started");
+		require(block.timestamp > tokenTradeStart, "Trade time has not started");
 		return super.transfer(_to, _value);
 	}
 
 	function transferFrom(address _from, address _to, uint256 _value) public override returns (bool){
-		require(block.timestamp == tokenTradeStart, "Trade time has not started");
+		require(block.timestamp > tokenTradeStart, "Trade time has not started");
 		return super.transferFrom(_from, _to, _value);
 	}
 
